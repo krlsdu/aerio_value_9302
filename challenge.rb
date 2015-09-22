@@ -11,8 +11,15 @@ class Challenge
   end
 
   def first_step(options={})
-    request = Net::HTTP.get_response(@uri,@path)
-    request.body
+    if options.empty?
+      request = Net::HTTP.get_response(@uri,@path)
+      request.body
+    else
+      @path=("#{@path}/#{options[:token]}/#{options[:sum]}")
+      request = Net::HTTP.get_response(@uri,@path)
+      request.body
+    end
+
   end
 
   def second_step(hash_json)
