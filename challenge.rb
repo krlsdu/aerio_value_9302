@@ -1,35 +1,32 @@
+#!/usr/bin/env ruby
 require 'net/http'
 require 'json'
 
-uri = URI('http://aerial-valor-93012.appspot.com/challenge')
+class Challenge
+  attr_accessor :uri, :path
 
-request = Net::HTTP.get_response(uri)
+  def initialize (uri='www.aerial-valor-93012.appspot.com', path='/challenge')
+    @uri = uri
+    @path = path
+  end
 
-response = request.body
+  def first_step(options={})
+    request = Net::HTTP.get_response(@uri,@path)
+    request.body
+  end
 
-my_hash = JSON.parse(response)
+  def second_step(hash_json)
 
-token = my_hash["token"]
-values = my_hash["values"]
+    parse = JSON.parse(hash_json)
 
-sum = values.inject(:+)
+    @token=parse["token"]
 
-url_solve = URI("http://aerial-valor-93012.appspot.com/challenge/#{token}/#{sum}")
+    @values=parse["values"]
 
-request_solve = Net::HTTP.get_response(url_solve)
+    @sum = @values.inject(:+)
 
-response_solve = request_solve.body
+    hash = {token: @token, sum: @sum}
 
-puts "Initial data"
-puts " "
-puts uri
-puts "Token: #{token} "
-puts "Values #{values} "
+  end
 
-puts " "
-
-puts "Problem solve"
-puts " "
-puts url_solve
-puts "Sum: #{sum}"
-puts "Resolve challenge: #{response_solve}"
+end
