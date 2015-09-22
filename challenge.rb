@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+
 require 'net/http'
 require 'json'
 
@@ -37,3 +38,9 @@ class Challenge
   end
 
 end
+
+answer = Challenge.new
+close = answer.second_step(answer.first_step)
+puts answer.first_step(close)
+
+
