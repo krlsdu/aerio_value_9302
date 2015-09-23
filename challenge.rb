@@ -4,27 +4,32 @@ require 'net/http'
 require 'json'
 
 # Class to solve challenge make by typeform
-class Challenge
-  attr_accessor :uri, :path
+class DogFavoritFood
+  attr_accessor :path
 
-  def initialize(uri = 'www.aerial-valor-93012.appspot.com',
-                 path = '/challenge')
-    @uri = uri
-    @path = path
+
+  def initialize
+    @path = '/challenge'
+    @uri = 'www.aerial-valor-93012.appspot.com'
   end
 
-  def first_step(options = {})
-    if options.empty?
-      request = Net::HTTP.get_response(@uri, @path)
-    else
+  def request_token_and_values(options = {})
+
+    unless options.empty?
       @path = ("#{@path}/#{options[:token]}/#{options[:sum]}")
-      request = Net::HTTP.get_response(@uri, @path)
     end
 
+    request = Net::HTTP.get_response(@uri, @path)
     request.body
   end
 
-  def second_step(hash_json)
+
+end
+
+class ParseBodyRequest
+  attr_accessor :hash_json
+
+  def parse_request(hash_json)
     parse = JSON.parse(hash_json)
 
     @token = parse['token']
@@ -37,6 +42,9 @@ class Challenge
   end
 end
 
-answer = Challenge.new
-close = answer.second_step(answer.first_step)
-puts answer.first_step(close)
+dog = DogFavoritFood.new
+parse = ParseBodyRequest.new
+
+puts one = dog.request_token_and_values
+two = parse.parse_request(one)
+puts dog.request_token_and_values(two)
