@@ -21,11 +21,12 @@ class Challenge
       request = Net::HTTP.get_response(@uri, @path)
     end
 
-    request.body
+    response = request.body
+    JSON.parse(response)
   end
 
-  def second_step(hash_json)
-    parse = JSON.parse(hash_json)
+  def second_step(hash_json = {})
+    parse = hash_json
 
     @token = parse['token']
 
@@ -36,7 +37,3 @@ class Challenge
     { token: @token, sum: @sum }
   end
 end
-
-# answer = Challenge.new
-# close = answer.second_step(answer.first_step)
-# puts answer.first_step(close)

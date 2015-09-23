@@ -1,12 +1,13 @@
-require "spec_helper"
-require "./challenge"
-
+require './challenge'
+require 'spec_helper'
 describe Challenge do
-  describe "#first_step" do
-    it "Response toke and value" do
+  describe '#first_step' do
+    it 'Structure the request should be www.aerial-valor-93012.appspot.com/challenge' do
       teste = Challenge.new
-      one = teste.first_step
-      expect(one).to be_kind_of(Hash)
+      path = teste.path
+      uri = teste.uri
+      expect(teste.path).to eq('/challenge')
+      expect(teste.uri).to eq('www.aerial-valor-93012.appspot.com')
     end
   end
 end
