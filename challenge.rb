@@ -37,6 +37,6 @@ class Challenge
   end
 end
 
-answer = Challenge.new
-close = answer.second_step(answer.first_step)
-puts answer.first_step(close)
+# answer = Challenge.new
+# close = answer.second_step(answer.first_step)
+# puts answer.first_step(close)
