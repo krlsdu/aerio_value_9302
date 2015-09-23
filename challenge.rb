@@ -3,29 +3,24 @@
 require 'net/http'
 require 'json'
 
-# Class to solve challenge make by typeform
+# Class to get the request from service Challenge
 class DogFavoritFood
   attr_accessor :path
-
-
   def initialize
     @path = '/challenge'
     @uri = 'www.aerial-valor-93012.appspot.com'
   end
 
   def request_token_and_values(options = {})
-
     unless options.empty?
       @path = ("#{@path}/#{options[:token]}/#{options[:sum]}")
     end
-
     request = Net::HTTP.get_response(@uri, @path)
     request.body
   end
-
-
 end
 
+# Class to parse the response the request made to service Challenge
 class ParseBodyRequest
   attr_accessor :hash_json
 
